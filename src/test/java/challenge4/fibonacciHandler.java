@@ -3,21 +3,43 @@ package challenge4;
 class fibonacciHandler {
     fibonacciHandler(){
     }
-    String calculate(long order, long current, long previous){
-        if(order > 0){
-            if(current == 0){
-                return calculate(order -1, 1, 0);
-            }
-            else if(previous == 0){
-                return calculate(order -1, 1, 1);
-            }
-            return calculate(order -1, current + previous, current);
+    String calculate(long order){
+
+        if(order == 0){
+            return "0 is not valid.";
         }
         else{
-            return current + " " + numberToString(current);
+            long number = fibo(order, 0, 0);
+            return number + " " + numberToString(number);
         }
+//        if(order == 0 && current == 0 && previous == 0){
+//            return "Order 0 doesn't exist.";
+//        }
+//        else if(order > 0){
+//            if(current == 1){
+//                return calculate(order -1, 0, 0);
+//            }
+//            else if(previous == 0){
+//                return calculate(order -1, 1, 1);
+//            }
+//            return calculate(order -1, current + previous, current);
+//        }
+//        else{
+//            return current + " " + numberToString(current);
+//        }
     }
-    private String numberToString(long number){
+    private long fibo(long order, long current, long previous){
+        if(order > 0) {
+            if(current == 0){
+                return fibo(order -1, 1, 0);
+            }
+            else{
+                return fibo(order -1, current + previous, current);
+            }
+        }
+        return current;
+    }
+    String numberToString(long number){
         String[] ones_position = new String[]{"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
         String[] tens = new String[]{"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
         String[] tens_position = new String[]{"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
