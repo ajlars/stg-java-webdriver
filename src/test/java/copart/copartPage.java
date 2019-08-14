@@ -1,6 +1,7 @@
 package copart;
 
 import net.bytebuddy.implementation.bytecode.Throw;
+import org.apache.commons.lang3.ObjectUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,27 +15,38 @@ import java.util.concurrent.TimeUnit;
 public class copartPage {
     private WebDriver driver;
     private WebDriverWait wait;
+    private WebDriverWait waitOne;
     private By searchInput = By.id("input-search");
     private By searchButton = By.cssSelector("button[data-uname='homepageHeadersearchsubmit']");
     private By resultsTable = By.id("serverSideDataTable");
     private By resultsTableMakes = By.xpath("//*[@id='serverSideDataTable']//tr/td[5]");
     private By popularItems = By.xpath("//div[@ng-if='popularSearches']//a");
+    private By searchText = By.cssSelector("[ng-if='searchText']");
+    private By searchNotFoundText = By.cssSelector("[data-uname='sorryMessage']");
 
 
     public copartPage(String browser) {
+        driver = buildDriver(browser);
+        wait = new WebDriverWait(driver, 10);
+        waitOne = new WebDriverWait(driver, 1);
+    }
+
+    private WebDriver buildDriver(String browser){
+        WebDriver newDriver = null;
         switch(browser){
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", "./bin/chromedriver.exe");
-                driver = new ChromeDriver();
-                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                wait = new WebDriverWait(driver, 30);
+                newDriver = new ChromeDriver();
+                newDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                 break;
             default:
                 System.out.println("No valid browser specified.");
         }
+        return newDriver;
     }
 
-    public void startChrome(){
+    public WebDriver getDriver(){
+        return driver;
     }
 
     public void quit() {
@@ -51,10 +63,32 @@ public class copartPage {
         driver.findElement(searchInput).clear();
         driver.findElement(searchInput).sendKeys(searchTerm);
         driver.findElement(searchButton).click();
+        waitForSearch();
+    }
+
+    public Boolean waitForSearch() throws InterruptedException {
+        Boolean searchLoaded = false;
+        try{
+            System.out.println("Starting wait: " + System.currentTimeMillis());
+            wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(searchText), "Lots"));
+            System.out.println("Found element: " + System.currentTimeMillis());
+        }catch(Exception e){
+            System.out.println("Did not find element: " + System.currentTimeMillis());
+            waitOne.until(ExpectedConditions.presenceOfElementLocated(searchNotFoundText));
+            System.out.println("Finished waiting for not found: " + System.currentTimeMillis());
+            return false;
+        }
+        return true;
     }
 
     public String getSearchString() {
-        return driver.findElement(By.cssSelector("[ng-if='searchText']")).getText();
+        return driver.findElement(searchText).getText();
+    }
+
+    public String getFailedSearchString() {
+        wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(searchNotFoundText), "Sorry we were unable to find results for"));
+        System.out.println("Found text: " + driver.findElement(searchNotFoundText).getText());
+        return driver.findElement(searchNotFoundText).getText();
     }
 
     public String getCurrentUrl(){
@@ -151,7 +185,5 @@ public class copartPage {
         }
     }
 
-    public WebDriver getDriver(){
-        return driver;
-    }
+
 }

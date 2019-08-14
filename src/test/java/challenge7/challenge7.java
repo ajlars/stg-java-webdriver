@@ -37,15 +37,23 @@ public class challenge7 {
     }
 
     @Test
-    public void checkPopularLinks(){
+    public void checkPopularLinks() throws InterruptedException{
         String [][] results = page.getPopularItems();
         for(String[] result: results){
-            page.getDriver().get(result[1]);
-            String searchString = page.getSearchString().toLowerCase();
             String linkTextMassaged = result[0].replace(' ', '-').toLowerCase(); //the pages and urls use hyphens anywhere spaces were present in make/model
+            String searchString;
+            page.getDriver().get(result[1]);
+            Boolean searchSuccessful = page.waitForSearch();
+            System.out.println("Found: " + result[0] + " match? " + searchSuccessful);
+            if(searchSuccessful){
+                searchString = page.getSearchString().toLowerCase();
+            }
+            else{
+                searchString = page.getFailedSearchString().toLowerCase();
+            }
+            Assert.assertTrue(searchString.contains(linkTextMassaged), "The search text didn't match the link text. Search Text: '" + searchString + "', Link Text: " + linkTextMassaged + "'.");
             String url = page.getCurrentUrl().toLowerCase();
-            Assert.assertTrue(searchString.contains(linkTextMassaged), "The search text didn't match the link text.");
-            Assert.assertTrue(url.contains(linkTextMassaged), "The link didn't contain the link text.");
+            Assert.assertTrue(url.contains(linkTextMassaged), "The search page url didn't contain the link text. URL: '" + url + "', Link Text: '" + linkTextMassaged +"'.");
         }
 
     }
