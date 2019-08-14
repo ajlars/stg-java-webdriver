@@ -1,7 +1,6 @@
 package challenge7;
 
 import copart.copartPage;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -44,7 +43,6 @@ public class challenge7 {
             String searchString;
             page.getDriver().get(result[1]);
             Boolean searchSuccessful = page.waitForSearch();
-            System.out.println("Found: " + result[0] + " match? " + searchSuccessful);
             if(searchSuccessful){
                 searchString = page.getSearchString().toLowerCase();
             }

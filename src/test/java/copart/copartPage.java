@@ -1,7 +1,5 @@
 package copart;
 
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.apache.commons.lang3.ObjectUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +17,6 @@ public class copartPage {
     private By searchInput = By.id("input-search");
     private By searchButton = By.cssSelector("button[data-uname='homepageHeadersearchsubmit']");
     private By resultsTable = By.id("serverSideDataTable");
-    private By resultsTableMakes = By.xpath("//*[@id='serverSideDataTable']//tr/td[5]");
     private By popularItems = By.xpath("//div[@ng-if='popularSearches']//a");
     private By searchText = By.cssSelector("[ng-if='searchText']");
     private By searchNotFoundText = By.cssSelector("[data-uname='sorryMessage']");
@@ -67,15 +64,10 @@ public class copartPage {
     }
 
     public Boolean waitForSearch() throws InterruptedException {
-        Boolean searchLoaded = false;
         try{
-            System.out.println("Starting wait: " + System.currentTimeMillis());
             wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(searchText), "Lots"));
-            System.out.println("Found element: " + System.currentTimeMillis());
         }catch(Exception e){
-            System.out.println("Did not find element: " + System.currentTimeMillis());
             waitOne.until(ExpectedConditions.presenceOfElementLocated(searchNotFoundText));
-            System.out.println("Finished waiting for not found: " + System.currentTimeMillis());
             return false;
         }
         return true;
@@ -87,7 +79,6 @@ public class copartPage {
 
     public String getFailedSearchString() {
         wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(searchNotFoundText), "Sorry we were unable to find results for"));
-        System.out.println("Found text: " + driver.findElement(searchNotFoundText).getText());
         return driver.findElement(searchNotFoundText).getText();
     }
 
