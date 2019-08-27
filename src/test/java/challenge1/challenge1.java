@@ -8,17 +8,17 @@ import org.testng.annotations.*;
 public class challenge1 {
     private WebDriver driver;
     
-    @BeforeSuite
-    public void startSuite() throws Exception {
-    }
+//    @BeforeSuite
+//    public void startSuite() throws Exception {
+//    }
 
     @AfterSuite
-    public void stopSuite() throws Exception {
+    public void stopSuite() {
         System.out.println("All done!!!");
     }
 
     @BeforeClass
-    public void startClass() throws Exception{
+    public void startClass() {
         System.setProperty("webdriver.chrome.driver", "./bin/chromedriver.exe");
         driver = new ChromeDriver();
     }
@@ -28,21 +28,21 @@ public class challenge1 {
         driver.quit();
     }
 
-    @BeforeMethod()
-    public void BeforeMethod() throws Exception{
-    }
+//    @BeforeMethod()
+//    public void BeforeMethod() throws Exception{
+//    }
 
-    @AfterMethod()
-    public void AfterMethod(){  
-    }
+//    @AfterMethod()
+//    public void AfterMethod(){
+//    }
 
     @Test()
-    public void goToGoogle() throws Exception{
+    public void goToGoogle() {
         driver.get("https://www.google.com");
     }
 
     @Test()
-    public void verifyGoogleTitle() throws Exception{
+    public void verifyGoogleTitle() {
         Assert.assertEquals(driver.getTitle(), "Google");
     }
 }

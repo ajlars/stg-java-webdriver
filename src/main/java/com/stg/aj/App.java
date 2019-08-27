@@ -3,7 +3,7 @@ package com.stg.aj;
 /**
  * Hello world!
  */
-public final class App {
+final class App {
     private App() {
     }
 

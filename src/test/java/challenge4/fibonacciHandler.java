@@ -12,21 +12,6 @@ class fibonacciHandler {
             long number = fibo(order, 0, 0);
             return number + " " + numberToString(number);
         }
-//        if(order == 0 && current == 0 && previous == 0){
-//            return "Order 0 doesn't exist.";
-//        }
-//        else if(order > 0){
-//            if(current == 1){
-//                return calculate(order -1, 0, 0);
-//            }
-//            else if(previous == 0){
-//                return calculate(order -1, 1, 1);
-//            }
-//            return calculate(order -1, current + previous, current);
-//        }
-//        else{
-//            return current + " " + numberToString(current);
-//        }
     }
     private long fibo(long order, long current, long previous){
         if(order > 0) {
@@ -39,43 +24,43 @@ class fibonacciHandler {
         }
         return current;
     }
-    String numberToString(long number){
+    private String numberToString(long number){
         String[] ones_position = new String[]{"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
         String[] tens = new String[]{"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
         String[] tens_position = new String[]{"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
         String[] thousands_position = new String[]{"thousand", "million", "billion", "trillion", "quadrillion", "quintillion"};
 
-        String fibonacciString = "";
+        StringBuilder fibonacciString = new StringBuilder();
         String[] splitNum = String.valueOf(number).split("");
         int[] toConvert = new int[(splitNum.length)];
         for(int i = 0; i < splitNum.length; i++){
             toConvert[i] = Integer.valueOf(splitNum[splitNum.length-(i+1)]);
         }
         for(int i = 0; i < toConvert.length; i++){
-            if(!fibonacciString.equals("") && !fibonacciString.substring(0,1).equals(" ")){
-                fibonacciString = " " + fibonacciString;
+            if(!fibonacciString.toString().equals("") && !fibonacciString.substring(0,1).equals(" ")){
+                fibonacciString.insert(0, " ");
             }
             if(i%3==0 && i!=0 && toConvert.length > 3){
                 if(toConvert[i]!=0 || toConvert[i+1]!=0 || toConvert[i+2]!=0){
-                    fibonacciString = " " + thousands_position[(i/3)-1] + fibonacciString;
+                    fibonacciString.insert(0, " " + thousands_position[(i / 3) - 1]);
                 }
             }
             if((i+1)%3==1 && toConvert.length == i+1){
-                fibonacciString = ones_position[toConvert[i]] + fibonacciString;
+                fibonacciString.insert(0, ones_position[toConvert[i]]);
             }
             else if((i+1)%3==1 && toConvert[i+1]!=1){
-                fibonacciString = ones_position[toConvert[i]] + fibonacciString;
+                fibonacciString.insert(0, ones_position[toConvert[i]]);
             }
             else if((i+1)%3==2 && toConvert[i]==1){
-                fibonacciString = tens[toConvert[i-1]] + fibonacciString;
+                fibonacciString.insert(0, tens[toConvert[i - 1]]);
             }
             else if((i+1)%3==2){
-                fibonacciString = tens_position[toConvert[i]] + fibonacciString;
+                fibonacciString.insert(0, tens_position[toConvert[i]]);
             }
             else if((i+1)%3==0 && toConvert[i]!=0){
-                fibonacciString = ones_position[toConvert[i]] + " hundred" + fibonacciString;
+                fibonacciString.insert(0, ones_position[toConvert[i]] + " hundred");
             }
         }
-        return fibonacciString;
+        return fibonacciString.toString();
     }
 }

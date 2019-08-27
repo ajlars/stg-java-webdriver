@@ -1,28 +1,24 @@
 package challenge5;
 
 import copart.copartPage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class challenge5 {
     private copartPage page;
 
-    @BeforeSuite
-    public void startSuite() throws Exception {
-    }
+//    @BeforeSuite
+//    public void startSuite() throws Exception {
+//    }
 
     @AfterSuite
-    public void stopSuite() throws Exception {
+    public void stopSuite() {
         System.out.println("All done!!!");
     }
 
     @BeforeClass
-    public void startClass() throws Exception{
+    public void startClass() {
         page = new copartPage("chrome");
         page.navigate();
     }
@@ -32,13 +28,13 @@ public class challenge5 {
         page.quit();
     }
 
-    @BeforeMethod()
-    public void BeforeMethod() throws Exception{
-    }
+//    @BeforeMethod()
+//    public void BeforeMethod() throws Exception{
+//    }
 
-    @AfterMethod()
-    public void AfterMethod(){
-    }
+//    @AfterMethod()
+//    public void AfterMethod(){
+//    }
     
     @Test
     public void getModels() throws InterruptedException{

@@ -30,6 +30,7 @@ public class copartPage {
 
     private WebDriver buildDriver(String browser){
         WebDriver newDriver = null;
+        //noinspection SwitchStatementWithTooFewBranches
         switch(browser){
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", "./bin/chromedriver.exe");
@@ -55,7 +56,7 @@ public class copartPage {
         wait.until(ExpectedConditions.titleIs("Auto Auction - Copart USA - Salvage Cars For Sale"));
     }
 
-    public void search(String searchTerm) throws InterruptedException {
+    public void search(String searchTerm){
         wait.until(ExpectedConditions.elementToBeClickable(searchButton));
         driver.findElement(searchInput).clear();
         driver.findElement(searchInput).sendKeys(searchTerm);
@@ -63,7 +64,7 @@ public class copartPage {
         waitForSearch();
     }
 
-    public Boolean waitForSearch() throws InterruptedException {
+    public Boolean waitForSearch(){
         try{
             wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(searchText), "Lots"));
         }catch(Exception e){

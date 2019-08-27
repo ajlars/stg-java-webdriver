@@ -12,17 +12,17 @@ import java.util.*;
 public class challenge6 {
     private copartPage page;
 
-    @BeforeSuite
-    public void startSuite() throws Exception {
-    }
+//    @BeforeSuite
+//    public void startSuite() throws Exception {
+//    }
 
     @AfterSuite
-    public void stopSuite() throws Exception {
+    public void stopSuite() {
         System.out.println("All done!!!");
     }
 
     @BeforeClass
-    public void startClass() throws Exception {
+    public void startClass() {
         page = new copartPage("chrome");
         page.navigate();
     }
@@ -32,13 +32,13 @@ public class challenge6 {
         page.quit();
     }
 
-    @BeforeMethod()
-    public void BeforeMethod() throws Exception {
-    }
+//    @BeforeMethod()
+//    public void BeforeMethod() throws Exception {
+//    }
 
-    @AfterMethod()
-    public void AfterMethod() {
-    }
+//    @AfterMethod()
+//    public void AfterMethod() {
+//    }
 
     @Test
     public void filterModels() throws Exception {

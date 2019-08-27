@@ -7,17 +7,17 @@ import org.testng.annotations.*;
 public class challenge7 {
     private copartPage page;
 
-    @BeforeSuite
-    public void startSuite() throws Exception {
-    }
+//    @BeforeSuite
+//    public void startSuite() throws Exception {
+//    }
 
     @AfterSuite
-    public void stopSuite() throws Exception {
+    public void stopSuite() {
         System.out.println("All done!!!");
     }
 
     @BeforeClass
-    public void startClass() throws Exception{
+    public void startClass() {
         page = new copartPage("chrome");
         page.navigate();
     }
@@ -27,16 +27,16 @@ public class challenge7 {
         page.quit();
     }
 
-    @BeforeMethod()
-    public void BeforeMethod() throws Exception{
-    }
+//    @BeforeMethod()
+//    public void BeforeMethod() throws Exception{
+//    }
 
-    @AfterMethod()
-    public void AfterMethod(){
-    }
+//    @AfterMethod()
+//    public void AfterMethod(){
+//    }
 
     @Test
-    public void checkPopularLinks() throws InterruptedException{
+    public void checkPopularLinks() {
         String [][] results = page.getPopularItems();
         for(String[] result: results){
             String linkTextMassaged = result[0].replace(' ', '-').toLowerCase(); //the pages and urls use hyphens anywhere spaces were present in make/model
